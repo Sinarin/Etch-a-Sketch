@@ -13,8 +13,8 @@ rainbowBttn.addEventListener('click', rainbowButton);
 //sketch.addEventListener('mouseup', stopDraw)
 
 function resize(e) {
-   let boxSize = +prompt("enter new resolution (max 100)")
-   if(isNaN(boxSize) || boxSize > 100 || boxSize < 0){
+   let boxSize = +prompt("enter new resolution (max 100)");
+   if(isNaN(boxSize) || boxSize > 100 || boxSize < 0 || !boxSize){
     return alert("invalid input, please enter a number between 0-100");
    }
    const sketch1 = document.querySelector('.sketch');
