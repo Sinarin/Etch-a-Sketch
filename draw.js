@@ -1,6 +1,7 @@
 const body = document.querySelector('body');
-
+let stopDraw = true;
 makeSketchPad();
+window.addEventListener('mouseup', stopDrawing)
 
 const sizeBttn = document.querySelector('.sizeBttn');
 sizeBttn.addEventListener('click', resize);
@@ -45,7 +46,9 @@ function makeSketchPad(boxSize = 16) {
     const pixels = document.querySelectorAll('.column'); 
     pixels.forEach(function(pixel){
       pixel.removeEventListener('mouseover', addBlack);
+      pixel.removeEventListener('mousedown', addBlack);
       pixel.addEventListener('mouseover', rainbow);
+      pixel.addEventListener('mousedown', rainbow);
   });
   }
 }
@@ -53,21 +56,25 @@ function makeSketchPad(boxSize = 16) {
 function draw(){
   const pixels = document.querySelectorAll('.column');
   pixels.forEach(function(pixel){
+  pixel.addEventListener('mousedown', startDraw);
   pixel.addEventListener('mouseover', addBlack);
+  pixel.addEventListener('mousedown', addBlack);
   });
   }
 
-function stopDraw(){
-  pixels.forEach(function(pixel){
-  pixel.removeEventListener('mouseover', addBlack);
-  });
+function stopDrawing(){
+  stopDraw = true;
   }
+
+  function startDraw(){stopDraw = false}
 
 function addBlack(e) {
-  this.style.cssText = 'background-color: rgb(0, 0, 0)';
+  if (!stopDraw)
+  {this.style.cssText = 'background-color: rgb(0, 0, 0)';}
 }
 
 function rainbow(e) {
+if (!stopDraw){
   let currentColor = window.getComputedStyle(this).getPropertyValue('background-color');
   console.log(currentColor);
   
@@ -93,6 +100,7 @@ function rainbow(e) {
     this.style.cssText = `background-color: rgb(${colorValues[0]}, ${colorValues[1]}, ${colorValues[2]})`;
   }
 }
+}
 
 function rainbowButton(){
   const sketch = document.querySelector('body')
@@ -103,7 +111,9 @@ function rainbowButton(){
   sketch.classList.add('rainbow');
   pixels.forEach(function(pixel){
     pixel.removeEventListener('mouseover', addBlack);
+    pixel.removeEventListener('mousedown', addBlack);
     pixel.addEventListener('mouseover', rainbow);
+    pixel.addEventListener('mousedown', rainbow);
   });
   }
 
@@ -111,7 +121,9 @@ function rainbowButton(){
     sketch.classList.remove('rainbow');
     pixels.forEach(function(pixel){
       pixel.removeEventListener('mouseover', rainbow);
+      pixel.removeEventListener('mousedown', rainbow);
       pixel.addEventListener('mouseover', addBlack);
+      pixel.addEventListener('mousedown', addBlack);
   });
   }
 }
