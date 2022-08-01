@@ -1,6 +1,7 @@
 const body = document.querySelector('body');
 let stopDraw = true;
 makeSketchPad();
+//on mouse up turns drawing off stopDraw = true
 window.addEventListener('mouseup', stopDrawing)
 
 const sizeBttn = document.querySelector('.sizeBttn');
@@ -11,7 +12,7 @@ rainbowBttn.addEventListener('click', rainbowButton);
 
 
 
-//sketch.addEventListener('mouseup', stopDraw)
+
 
 function resize(e) {
    let boxSize = +prompt("enter new resolution (max 100)");
@@ -56,6 +57,7 @@ function makeSketchPad(boxSize = 16) {
 function draw(){
   const pixels = document.querySelectorAll('.column');
   pixels.forEach(function(pixel){
+  //allows drawing on mouse down of a drawing element
   pixel.addEventListener('mousedown', startDraw);
   pixel.addEventListener('mouseover', addBlack);
   pixel.addEventListener('mousedown', addBlack);
